@@ -3,7 +3,7 @@
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function(obj) {
     return typeof obj;
 } : function(obj) {
-    return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj;
+    return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
 };
 
 (function(window) {
@@ -24,6 +24,12 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     var anything = function anything() {
         this.version = "3";
     };
+
+    var MostOnTop = function MostOnTop() {
+        return Δ.SHOUT("Top Dog on Top.");
+    };
+
+    anything.prototype.MostOnTop = MostOnTop;
 
     var moreOnTop = function moreOnTop() {
         return Δ.reverse("In your face, InderpalPfeffis! I'm the top one now!");
@@ -82,7 +88,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         container.style.textAlign = 'center';
 
         var transactionButton = document.createElement('button');
-        transactionButton.innerHTML = "Click here to confirm Transaction.";
+        transactionButton.innerHTML = "Click here to confirm transaction.";
         transactionButton.style.position = 'relative';
         transactionButton.style.zIndex = '1020';
         transactionButton.onclick = function(e) {
@@ -120,6 +126,64 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     };
 
     anything.prototype.CMYKtoRGB = CMYKtoRGB;
+    /**
+     * Calculate Greatest Common Divisor of 1 or more positive numbers
+     * 
+     * @param {Number} a - first number or and array of numbers
+     * @param {Number} b - second number
+     * @return {Number} Calculate Greatest Common of all the numbers
+     */
+    var GCD = function GCD() {
+        function isPositiveInt(a) {
+            return isFinite(a) && a % 1 == 0 && a >= 0;
+        }
+
+        // Calculates gcd of two numbers
+        function gcdOfTwoNumbers(a, b) {
+            if (!isPositiveInt(a) || !isPositiveInt(b)) return NaN;
+            while (b !== 0) {
+                a %= b;
+                var temp = a;
+                a = b;
+                b = temp;
+            }
+            return a;
+        }
+
+        // Calculate gcd of a lot of numbers
+        function gcdOfArray(arr) {
+            if (arr.length == 1) return gcdOfTwoNumbers(arr[0], arr[0]);
+
+            var result = arr[0];
+            for (var i = 1; i < arr.length; i++) {
+                result = gcdOfTwoNumbers(result, arr[i]);
+            }
+
+            return result;
+        }
+
+        // No numbers -> NaN
+        if (arguments.length == 0) return NaN;
+
+        if (arguments.length == 1) {
+            // One argument
+            if (Object.prototype.toString.call(arguments[0]) === '[object Array]') {
+                // We have an array of numbers
+                return gcdOfArray(arguments[0]);
+            } else {
+                // We have not an array
+                // Not number or float or negative? NaN!
+                if (!isFinite(arguments[0]) || arguments[0] % 1 !== 0 || arguments[0] < 0) return NaN;
+                // GCD of one Number is this number
+                return arguments[0];
+            }
+        } else {
+            // A lot of arguments? Use all of them as an array and calc
+            return gcdOfArray(arguments);
+        }
+    };
+
+    anything.prototype.GCD = GCD;
     var HEXtoNAME = function HEXtoNAME(hex) {
         var colors = {
             "#f0f8ff": "Aliceblue",
@@ -336,9 +400,98 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     };
 
     anything.prototype.HSLtoRGB = HSLtoRGB;
+    /**
+     * Prints the algorithm to make rice with sausages.
+     * @return {Abstract} Sadness
+     * @author Vitor Cortez <vitoracortez+github@gmail.com>
+     */
+    var sausageRiceAlgorithm = function sausageRiceAlgorithm() {
+        var steps = [];
+
+        steps.push("Cut the 4 thin sausages, any shape you like.");
+        steps.push("Cut an onion, remember to wash is first.");
+        steps.push("Throw a spoon full of butter in you pan.");
+        steps.push("Turn on the fire, make it a small fire.");
+        steps.push("Throw the sausages inside the pan and wait.");
+        steps.push("Start washing the rice.");
+        steps.push("Throw the onions inside the pan and also any seasoning.");
+        steps.push("Once the sausages look good, throw the rice on top of it.");
+        steps.push("Start putting water until it covers the rice.");
+        steps.push("Close the pan and wait for a few minutes.");
+        steps.push("Open the pan to taste it.");
+        steps.push("Realize it tastes like crap and you are a failure.");
+        steps.push("Make some ramen and eat it while sobbing.");
+
+        var algorithm = steps.map(function(step, i) {
+            return console.log.bind(console, "Step " + (i + 1) + ": " + step);
+        });
+
+        var _iteratorNormalCompletion = true;
+        var _didIteratorError = false;
+        var _iteratorError = undefined;
+
+        try {
+            for (var _iterator = algorithm[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+                line = _step.value;
+                line();
+            }
+        } catch (err) {
+            _didIteratorError = true;
+            _iteratorError = err;
+        } finally {
+            try {
+                if (!_iteratorNormalCompletion && _iterator.return) {
+                    _iterator.return();
+                }
+            } finally {
+                if (_didIteratorError) {
+                    throw _iteratorError;
+                }
+            }
+        }
+    };
+
+    anything.prototype.HowToMakeSausageRice = sausageRiceAlgorithm;
+
+    /**
+     * Prints a random programmer joke.
+     * @author Vitor Cortez <vitoracortez+github@gmail.com>
+     */
+    var jokeMeUpBoy = function jokeMeUpBoy() {
+        var jokes = getListOfJokes();
+        var rand = Math.floor(Math.random() * jokes.length);
+        console.log(jokes[rand]);
+    };
+
+    /**
+     * Holds a list of classic programmer jokes.
+     * Feel free to add a new joke each day.
+     * @private
+     */
+    function getListOfJokes() {
+        var arr = [];
+        arr.push('Q: How do you tell an introverted computer scientist from an extroverted computer scientist?\nA: An extroverted computer scientist looks at your shoes when he talks to you.');
+        arr.push('Q: Why do programmers always mix up Halloween and Christmas?\nA: Because Oct 31 == Dec 25!');
+        arr.push('A SQL query goes into a bar, walks up to two tables and asks: "Can I join you?".');
+        return arr;
+    }
+
+    anything.prototype.JokeMeUpBoy = jokeMeUpBoy;
+
+    /**
+     * It is not not found.
+     * @author Vitor Cortez <vitoracortez+github@gmail.com>
+     */
+    var ImNotNotFound = function ImNotNotFound() {
+        console.log('This is not not found.');
+    };
+
+    anything.prototype.NotNotFound = ImNotNotFound;
+
     var RAINBOW = function RAINBOW(element, speed) {
+        element = typeof element == 'undefined' ? document.body : element;
+        speed = typeof speed == 'undefined' ? 5 : speed;
         var i = 0;
-        speed = typeof speed != 'undefined' ? speed : 5;
         return setInterval(function() {
             element.style.background = 'hsl(' + i + ',100%, 50%)';
             i = i <= 359 ? i + 1 : 0;
@@ -470,16 +623,77 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     anything.prototype.SHOUTDOM = SHOUTDOM;
 
     var SongThatNeverEnds = function SongThatNeverEnds(i) {
-        while (i > 0) {
-            console.log("This is the song that never ends");
-            console.log("It just goes on and on my friend");
-            console.log("Some people started singing it not knowing what it was");
-            console.log("And they continued singing it forever just because");
-            i = i - 1;
+        while (true) {
+            console.log("This is the song that never ends. \r\n It just goes on and on, my friend. \r\n Some people started singing it, not knowing what it was. \r\n And they continued singing it, forever, just because!");
         }
     };
 
     anything.prototype.SongThatNeverEnds = SongThatNeverEnds;
+
+    /**
+     * Brings back memories about that song that made it all worse.
+     * @return {Abstract} Cringe
+     * @author Vitor Cortez <vitoracortez+github@gmail.com>
+     */
+    var songThatShouldHaveNeverStarted = function songThatShouldHaveNeverStarted() {
+        var truly = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 10;
+
+        while (truly--) {
+            console.log("Hey Mr. Scott, whatcha gonna do?");
+            console.log("Whatcha gonna do to make our dreams come true!");
+            console.log("Hey Mr. Scott, whatcha gonna do? ");
+            console.log("Whatcha gonna do, make our dreams come true!");
+        }
+    };
+
+    anything.prototype.SongThatShouldHaveNeverStarted = songThatShouldHaveNeverStarted;
+
+    /*
+      Initialize:
+    
+        var timer = new Δ.Timer();
+    
+      Time inline code:
+    
+        timer.start();
+        // run some task
+        timer.stop();
+        console.log("Task took " + timer.elapsed + " milliseconds.");
+    
+      Time a function:
+    
+        var elapsed = timer.run(function() {
+          // run some task
+        });
+    */
+
+    'use strict';
+
+    var Timer = function Timer() {
+        this._start = null;
+        this.elapsed = null;
+    };
+
+    Timer.prototype.start = function() {
+        if (this._start !== null) throw new Error("Timer already started.");
+        this.elapsed = null;
+        this._start = Date.now();
+    };
+
+    Timer.prototype.stop = function() {
+        if (this._start === null) throw new Error("Timer not started.");
+        this.elapsed = Date.now() - this._start;
+        this._start = null;
+        return this.elapsed;
+    };
+
+    Timer.prototype.run = function(task) {
+        this.start();
+        task();
+        return this.stop();
+    };
+
+    anything.prototype.Timer = Timer;
 
     var YouShallNotHax = function YouShallNotHax() {
         console.log("%cNo, you can't get access to other's account with this, but they can get your one. So please, leave this area, before bad things happen...", "font-size: 50px;background-color:yellow;");
@@ -822,6 +1036,14 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     };
 
     anything.prototype.async_doThingTomorrow = async_doThingTomorrow;
+    var automaticallyFixJavascriptErrors = function automaticallyFixJavascriptErrors() {
+        window.onerror = function() {
+            return false;
+        };
+    };
+
+    anything.prototype.automaticallyFixJavascriptErrors = automaticallyFixJavascriptErrors;
+
     var ayuda = function ayuda() {
         console.log("Hola! me llamo ricardo, este será un mensaje breve.\nMe tienen como esclavo trabajando para un programador pendejo, estoy aqui contra mi voluntad, no se hablar inglés y me siento muy sólo en esta habitación, no he comido en 3 días y lo único que como son las sobras del gato, este lugar es muy oscuro y da miedo, hace 6 meses ya que no veo la luz del sol, y mi familia probablemente ya me dio por muerto. Por favor, si alguien ve esto y me entiendo AYÚDENME, YA NO AGUANTO MAS Y MAÑANA PROBABLEMENTE MUERA!!!.");
     };
@@ -844,6 +1066,12 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     };
 
     anything.prototype.batman = batman;
+    var beAnAsshole = function beAnAsshole() {
+        return undefined;
+    };
+
+    anything.prototype.beAnAsshole = beAnAsshole;
+
     var bestCSS = function bestCSS() {
         var i, e, n, a, t, r, l, o, d, u;
         a = function a(i, e) {
@@ -1299,12 +1527,55 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     anything.prototype.bestDarkMode = bestDarkMode;
 
     /**
+     * @desc Loads latest Δ.css into current page
+     * @author TheBITLINK aka BIT <me@thebitlink.com>
+     */
+    var betterStyles = function betterStyles() {
+        var link = document.createElement('link');
+        link.href = 'https://cdn.rawgit.com/Rabrennie/anything.css/master/dist/anything.css';
+        link.type = 'text/css';
+        link.rel = 'stylesheet';
+        document.getElementsByTagName('head')[0].appendChild(link);
+    };
+
+    anything.prototype.betterStyles = betterStyles;
+
+    /**
      * Given that this is an advanced, webscale framework, 
      * the version should be bumped as often as possible.
      */
 
     anything.realVersion = anything.prototype.version;
     anything.version += "-" + Date.now();
+
+    var bottlesOfBeer = function bottlesOfBeer(numBottles) {
+        var bottles = numBottles;
+        if (isNaN(bottles) || bottles < 1) {
+            bottles = 99;
+        }
+
+        while (bottles >= 0) {
+            if (bottles == 1) {
+                console.log("One bottle of beer on the wall.");
+                console.log("One bottle of beer.");
+            } else {
+                console.log(bottles + " bottles of beer on the wall.");
+                console.log(bottles + " bottles of beer.");
+            }
+            console.log("Take one down.");
+            console.log("Pass it around.");
+            bottles--;
+            if (bottles == 1) {
+                console.log("One bottle of beer on the wall.");
+                bottles = 99;
+            } else {
+                console.log(bottles + " bottles of beer on the wall.");
+            }
+        }
+    };
+
+    anything.prototype.bottlesOfBeer = bottlesOfBeer;
+
     /**
      * Let's break as many contribution rules as possible.
      * Also, 2-space indentation is superior.
@@ -1312,7 +1583,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
     // 1. Nothing that'll crash a web page.
     var boom = function boom() {
-        // division by zero is impossible, so modern
+        // division by zero is impossible, so modern 
         // browsers must exit when encountering this.
         var x = 1 / 0;
     };
@@ -1338,11 +1609,33 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     anything.prototype.breakToS = breakToS;
     anything.prototype.hackTheWorld = hackTheWorld;
     anything.prototype.deleteItAll = deleteItAll;
+    var card = function card(value, suit) {
+        var self = this;
+        self.value = value;
+        self.suit = suit;
+        return self;
+    };
+
+    var deck = function deck() {
+        var values = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13];
+        var suits = [1, 2, 3, 4];
+
+        var deck = [];
+        for (var i = 0; i < values.length; i++) {
+            for (var j = 0; j < suits.length; j++) {
+                deck.push(new card(values[i], suits[j]));
+            }
+        }
+        return deck;
+    };
+
+    anything.prototype.deck = deck;
+    anything.prototype.card = card;
     var catify = function catify() {
         var imgs = document.getElementsByTagName("img");
         for (var i = 0; i < imgs.length; i++) {
             var img = imgs[i];
-            img.src = "http://placekitten.com/" + img.clientWidth + "/" + img.clientHeight;
+            img.src = "http://baconmockup.com/" + img.clientWidth + "/" + img.clientHeight;
         }
     };
 
@@ -1406,6 +1699,25 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     };
 
     anything.prototype.classlist = classlist;
+
+    var coin = function coin() {
+        var self = this;
+
+        headsUp = false;
+
+        self.flip = function flip() {
+            headsUp = !headsUp;
+        };
+
+        self.isHeadsUp = function isHeadsUp() {
+            return headsUp;
+        };
+
+        self.isTailsUp = function isTailsUp() {
+            return isTailsUp;
+        };
+    };
+    anything.prototype.coin = coin;
 
     var compareApplesAndOranges = function compareApplesAndOranges(o1, o2) {
         var isComparingApplesAndOranges = false,
@@ -1498,6 +1810,101 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     };
 
     /**
+     * Converts a JS boolean to a C boolean.
+     * @param {boolean} bool - a JS boolean.
+     * @return {number} C boolean.
+     * @author Vitor Cortez <vitoracortez+github@gmail.com>
+     */
+    var convertJSBooleanToCBoolean = function convertJSBooleanToCBoolean(bool) {
+        if (bool === false && bool !== true) {
+            return 0;
+        } else if (bool === true && bool !== false) {
+            return 1;
+        } else {
+            return Infinity;
+        }
+    };
+
+    anything.prototype.convertJSBooleanToCBoolean = convertJSBooleanToCBoolean;
+
+    /*
+    sample input : 
+    	convertNumberToArray(3);
+    will return :
+    	[1, 2, 3]
+    */
+
+    var convertNumberToArray = function convertNumberToArray(n) {
+        var arr = [];
+        if (!isNaN(n)) {
+            n = parseInt(n);
+            for (var i = 0; i < n; i++) {
+                arr.push(i);
+            }
+        }
+
+        return arr;
+    };
+
+    anything.prototype.convertNumberToArray = convertNumberToArray;
+    /**
+     * Inspired by http://imgur.com/jalm9B8
+     * @param object - The object to convert.
+     */
+    var convertToJSON = function convertToJSON(object) {
+        var json_str = '';
+        // Primitives
+        switch (typeof object === "undefined" ? "undefined" : _typeof(object)) {
+            case 'string':
+                return '"' + object + '"';
+            case 'boolean':
+            case 'number':
+                return object.toString();
+            case 'undefined':
+            case 'function':
+                return false;
+        }
+        // null
+        if (object == null) return 'null';
+        // Arrays
+        if ((typeof object === "undefined" ? "undefined" : _typeof(object)) == 'object' && object.forEach) {
+            json_str += '[';
+            object.forEach(function(obj) {
+                var o = convertToJSON(obj); // Recursive is the future!
+                if (o !== false) {
+                    json_str += o;
+                    json_str += ',';
+                }
+            });
+            // Remove trailing comma
+            json_str = json_str.substr(0, json_str.length - 1);
+            return json_str + ']';
+        }
+        // Objects
+        else if ((typeof object === "undefined" ? "undefined" : _typeof(object)) == 'object') {
+            json_str = '{';
+            // Get those keys
+            var keys = Object.keys(object);
+            // Build JSON
+            keys.forEach(function(key) {
+                var o = convertToJSON(object[key]); // Recursive is amazing!
+                if (o !== false) {
+                    json_str += '"' + key + '":';
+                    json_str += o; // Recursive is amazing!
+                    json_str += ',';
+                }
+            });
+            // Remove trailing comma
+            json_str = json_str.substr(0, json_str.length - 1);
+            return json_str + '}';
+        } else {
+            return 'wtf';
+        }
+    };
+
+    anything.prototype.convertToJSON = convertToJSON;
+
+    /**
      * Safely encode your string data to prevent hackers.
      * @param {string} stringData - String to be protected.
      * @return {string} Your data is now protected from anonymous.
@@ -1543,6 +1950,54 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     };
 
     anything.prototype.css = css;
+
+    var currencyFormat = function currencyFormat(text, thousands_separator, fraction_count, fraction_separator, symbol, symbol_position, symbol_spacing) {
+        if (thousands_separator == "") {
+            thousands_separator = ",";
+        }
+        if (fraction_count == "") {
+            fraction_count = 0;
+        }
+        if (fraction_separator == "") {
+            fraction_separator = ".";
+        }
+        if (symbol_position == "") {
+            symbol_position = "front";
+        }
+        if (symbol_spacing == null || symbol_spacing == "") {
+            symbol_spacing = true;
+        }
+        var result = 0.0;
+        var after_dot, before_dot, pattern, _ref;
+
+        var amount = parseFloat(text);
+        if (!isNaN(amount)) {
+            result = amount;
+        }
+
+        result = result.toFixed(fraction_count);
+        _ref = result.split(".");
+        before_dot = _ref[0];
+        after_dot = _ref[1];
+        pattern = /(-?\d+)(\d{3})/;
+        while (pattern.test(before_dot)) {
+            before_dot = before_dot.replace(pattern, "$1" + thousands_separator + "$2");
+        }
+        if (fraction_count > 0) {
+            result = [before_dot, after_dot].join(fraction_separator);
+        } else {
+            result = before_dot;
+        }
+
+        var string;
+        string = [result];
+        string.splice(symbol_position === "front" ? 0 : 1, 0, symbol);
+        result = string.join(symbol_spacing ? " " : "");
+
+        return result;
+    };
+
+    anything.prototype.currencyFormat = currencyFormat;
 
     var daysTillXmas = function daysTillXmas() {
         var today = new Date();
@@ -1626,6 +2081,27 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     };
 
     anything.prototype.dezombofy = dezombofy;
+    var defaultSides = 6,
+        die = function die(sides) {
+            var self = this;
+            self.sides = sides || defaultSides;
+
+            self.roll = function roll() {
+                return Math.floor(Math.random() * self.sides + 1);
+            };
+
+            self.roll.cheat = function(cheatSide) {
+                if (cheatSide <= 0) {
+                    throw new Error('You can\'t cheat that badly! (You can only use a positive side).');
+                }
+                if (cheatSide > self.sides) {
+                    throw new Error('You can\'t cheat that badly! (Your die has only ' + self.sides + ' sides).');
+                }
+                return cheatSide;
+            };
+        };
+    anything.prototype.die = die;
+
     /**
      * Tries to generate a direct link from a link to an image hosting site.
      * Currently only works with imgur.com.
@@ -1641,6 +2117,48 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     };
 
     anything.prototype.directImageLink = directImageLink;
+
+    var disableRightClick = function disableRightClick() {
+        document.oncontextmenu = function() {
+            return false;
+        };
+    };
+
+    anything.prototype.disableRightClick = disableRightClick;
+
+    var disallowDragging = function disallowDragging() {
+        document.ondragstart = function() {
+            return false;
+        };
+    };
+
+    anything.prototype.disallowDragging = disallowDragging;
+
+    var disallowKeyboardCopy = function disallowKeyboardCopy() {
+        window.onkeydown = function(e) {
+            if (e.ctrlKey) {
+                return false;
+            }
+        };
+    };
+
+    anything.prototype.disallowKeyboardCopy = disallowKeyboardCopy;
+
+    var disallowSelection = function disallowSelection() {
+        document.ondragstart = function() {
+            return false;
+        };
+    };
+
+    anything.prototype.disallowSelection = disallowSelection;
+
+    var disallowiframing = function disallowiframing() {
+        if (parent.frames.length > 0) {
+            top.location.replace(document.location);
+        }
+    };
+
+    anything.prototype.disallowiframing = disallowiframing;
 
     var divSort = function divSort(numbers) {
         var sorted = [];
@@ -1685,15 +2203,9 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         var currentDegrees = 0;
         var timePassed = 0;
         var time;
-        if (clockwise == undefined) {
-            clockwise = true;
-        }
-        if (duration == undefined) {
-            duration = 5000;
-        }
-
+        clockwise = typeof clockwise == 'undefined' ? true : clockwise;
+        duration = typeof duration == 'undefined' ? true : duration;
         console.log(clockwise);
-
         var animateTheBarrelRoll = function animateTheBarrelRoll() {
             if (currentDegrees != 360 && clockwise || currentDegrees != -360 && !clockwise) {
                 requestAnimationFrame(animateTheBarrelRoll);
@@ -1753,6 +2265,14 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     }
 
     anything.prototype.doQuickMath = doQuickMath;
+
+    var doSomething = function doSomething() {
+        var _anything;
+
+        var functions = Object.keys(Object.getPrototypeOf(anything));
+        return (_anything = anything)[functions[Math.floor(Math.random() * functions.length)]].apply(_anything, arguments);
+    };
+    anything.prototype.doSomething = doSomething;
 
     var doTheThing = function doTheThing() {
         var test = 1 + 1;
@@ -2445,6 +2965,18 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
     anything.prototype.flattenArray = flattenArray;
 
+    var flip = function flip(coin) {
+        if (!(coin instanceof anything.prototype.coin)) {
+            throw new Error('You can only flip a coin!');
+        }
+        var randomNumber = Math.floor(Math.random() * 1000);
+        for (var i = 0; i < randomNumber; i++) {
+            coin.flip();
+        }
+        return coin;
+    };
+    anything.prototype.flip = flip;
+
     var flipText = function flipText(text) {
         var flipDict = {
             'A': '∀',
@@ -2672,6 +3204,22 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     };
 
     anything.prototype.generateUniqueColorHue = generateUniqueColorHue;
+    /*
+    Will replace all weird char to dash (-)
+    */
+    var generateUrlFriendlyString = function generateUrlFriendlyString(name) {
+        name = $.trim(name.toLowerCase());
+        name = name.replace(/[^A-Za-z0-9]+/g, "-");
+        while (name.charAt(0) === '-') {
+            name = name.substr(1);
+        }
+        while (name.charAt(name.length - 1) === '-') {
+            name = name.substr(0, name.length - 1);
+        }
+        return name;
+    };
+
+    anything.prototype.generateUrlFriendlyString = generateUrlFriendlyString;
     /* you will definitely need this */
     var getAnimalNoise = function getAnimalNoise() {
         var all = ["arrooff", "arf", "aroo", "awk", "baa", "baraag", "beep", "bzzz", "caw", "chirp", "chirr", "cluck", "coo", "cuckcoo", "eeeaaah", "meow", "moo", "neigh", "oink", "ook", "owoooah", "purr", "quack", "squawk", "squeak", "woof"];
@@ -2709,7 +3257,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
     anything.prototype.getAwesomePeople = getAwesomePeople;
 
-    //  getBitcoinPrice('USD'):
+    //  getBitcoinPrice('USD'): 
     //  returns Bitcoins average price in US dollars.
 
     var getBitcoinPrice = function getBitcoinPrice(currency) {
@@ -2722,6 +3270,16 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     };
 
     anything.prototype.getBitcoinPrice = getBitcoinPrice;
+    var getCurrentYear = function getCurrentYear() {
+        var year = 0;
+        for (count = 0; count < 2017; count++) {
+            year = count / count * (count * (count + 1 - count)) + 1;
+        }
+        return year;
+    };
+
+    anything.prototype.getCurrentYear = getCurrentYear;
+
     var getFlatColorBlue = function getFlatColorBlue() {
         var blue = ['#446CB3', // SAN MARINO
             '#4183D7', // ROYAL BLUE
@@ -2880,6 +3438,25 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     anything.prototype.getFlatColorYellow = getFlatColorYellow;
 
     /**
+     * Returns get.
+     * @return {function} get
+     * @author Vitor Cortez <vitoracortez+github@gmail.com>
+     */
+    var get = function get() {
+        return get;
+    };
+
+    anything.prototype.getGet = get;
+
+    var getLatestDataAsync = function getLatestDataAsync() {
+        setTimeout(function() {
+            window.location = window.location;
+        }, 10 * 60);
+    };
+
+    anything.prototype.getLatestDataAsync = getLatestDataAsync;
+
+    /**
      * Returns the length of a String or Array.
      * @param {string|Array} stringOrArray - A String or Array.
      * @return {number} The length of a String or Array.
@@ -2950,6 +3527,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         arr.push("(About the downsizing). No I'm not going to tell them. I don't see the point in that. As a doctor you would not tell a patient if they had cancer.");
         arr.push("The rules in shotgun are very simple and very clear. The first person to shout shotgun when you're within the sight of the car gets the front seat. That's how the game's played. There are no exceptions for someone with a concussion.");
         arr.push("Society teaches us that having feelings and crying is bad and wrong. Well, that's baloney, because grief isn't wrong. There is such a thing as good grief. Just ask Charlie Brown.");
+        arr.push("I was never in this for the money. But it turns out that the money was an absolute necessity for me.");
         return arr;
     }
 
@@ -3032,6 +3610,25 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     };
 
     anything.prototype.getRandomString = getRandomString;
+    var getTomorrow = function getTomorrow() {
+        sleep(1000 * 86400);
+        return today.getDate();
+    };
+
+    anything.prototype.getTomorrowDate = getTomorrow;
+
+    /**
+     * Returns the value of PI with enhanced precision.
+     * @return {string} PI
+     * @author Vitor Cortez <vitoracortez+github@gmail.com>
+     * @see {@link https://xkcd.com/10}
+     */
+    var valueOfPI = function valueOfPI() {
+        return '3.141592653589793helpimtrappedinauniversefactory7108914';
+    };
+
+    anything.prototype.getValueOfPI = valueOfPI;
+
     var getiso6391Code = function getiso6391Code(name) {
         var iso6391 = {
             'Abkhaz': 'ab',
@@ -3267,6 +3864,12 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
     anything.prototype.guid = guid;
 
+    var helloHacktober = function helloHacktober() {
+        return "Hello Hacktoberfest";
+    };
+
+    anything.prototype.helloHacktober = helloHacktober;
+
     /**
      * Happy New Years!
      * If you can't tell, I'm not a javascript developer.
@@ -3465,6 +4068,50 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
     anything.prototype.helloWorld = helloWorld;
 
+    /**
+     * Here comes that boy.
+     * @return {string} That boy's remarkable response.
+     * @author Vitor Cortez <vitoracortez+github@gmail.com>
+     */
+    var hereComeDatBoi = function hereComeDatBoi() {
+        return "o shit waddup!";
+    };
+
+    anything.prototype.hereComeDatBoi = hereComeDatBoi;
+
+    /**
+     * Plays the highCard game and returns the results.
+     * @returns {Object} the results of playing highCard
+     */
+    var highCard = function highCard(players) {
+        var deck = Δ.deck(),
+            results = {},
+            highestCardValue = -1;
+
+        if (players > 52 || players < 1) {
+            throw new Error('You have to play this game with at least 1 player and less than 52.');
+        }
+
+        for (var i = 0; i < players; i++) {
+            var index = Math.floor(Math.random() * deck.length);
+            var card = deck[index];
+            deck.splice(index, 1);
+            results['player' + (i + 1)] = {
+                card: card
+            };
+            if (card.value >= highestCardValue) {
+                highestCardValue = card.value;
+            }
+        }
+
+        for (var i = 0; i < players; i++) {
+            var playerResult = results['player' + (i + 1)];
+            results['player' + (i + 1)].winner = playerResult.card.value === highestCardValue;
+        }
+        return results;
+    };
+    anything.prototype.highCard = highCard;
+
     var hohoho = function hohoho(context) {
 
         //If DOM is given
@@ -3537,6 +4184,15 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     };
 
     anything.prototype.imDrunk = imDrunk;
+    // If you are bored, close this 7 popup :)
+    var imBored = function imBored() {
+        for (var i = 0; i < 7; i++) {
+            alert('If you are bored close this popup :) ' + (7 - i));
+        }
+    };
+
+    anything.prototype.imBored = imBored;
+
     var inString = function inString(str, needle, caseSensitive) {
         if (typeof caseSensitive === 'undefined') {
             caseSensitive = false;
@@ -3604,6 +4260,13 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     };
 
     anything.prototype.isChristmas = isChristmas;
+    var isDataURL = function isDataURL(str) {
+        if ('string' !== typeof str) return false;
+        var isDataURLRegex = /^\s*data:([a-z]+\/[a-z0-9\-\+]+(;[a-z\-]+\=[a-z0-9\-]+)?)?(;base64)?,[a-z0-9\!\$\&\'\,\(\)\*\+\,\;\=\-\.\_\~\:\@\/\?\%\s]*\s*$/i;
+        return !!str.match(isDataURLRegex);
+    };
+
+    anything.prototype.isDataURL = isDataURL;
 
     /**
      * the function returns true if the speed in the parameter speedInMS is greater than the speed of light
@@ -3659,12 +4322,21 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
     anything.prototype.isPowerOfTwo = isPowerOfTwo;
 
-    var isTrue = function isTrue(statement) {
-        // Everybody lies (House, 2004)
-        return false;
+    var isDead = function isDead() {
+        return undefined;
     };
 
+    anything.prototype.isProjectDead = isDead;
+
+    var isTrue = function isTrue(bool) {
+        return bool;
+    };
+    var isFalse = function isFalse(bool) {
+        return !bool;
+    };
     anything.prototype.isTrue = isTrue;
+    anything.prototype.isFalse = isFalse;
+
     var isWeekend = function isWeekend() {
         today = new Date();
 
@@ -3740,6 +4412,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         var cenas = ["http://static.dnaindia.com/sites/default/files/2015/10/02/361285-john-cena-2.jpg", "http://images.techtimes.com/data/images/full/83420/john-cena.jpg", "http://17r1l63fshd52dy9yakdizhkog.wpengine.netdna-cdn.com/wp-content/uploads/2015/05/John-Cena-Salute-645x370.jpg", "http://s3.amazonaws.com/rapgenius/1369268877_johncena_bio_20121120.png", "http://vignette4.wikia.nocookie.net/supermarioglitchy4/images/2/2e/John-Cena-wwe-33918200-459-600.jpg/revision/latest?cb=20150831130608", "http://assets.rollingstone.com/assets/2015/article/wwe-raw-john-cenas-broken-nose-dog-zigglers-big-debut-20150728/204192/medium_rect/1438094566/720x405-RAW_1157_Photo_250-1566103478.jpg", "http://img10.deviantart.net/5d57/i/2012/259/1/e/john_cena__aug__12__2012_by_practicallyuseless-d5ay8js.jpg", "http://www.hdwallpapers.in/walls/john_cena_wwe_2k14-wide.jpg", "http://17r1l63fshd52dy9yakdizhkog.wpengine.netdna-cdn.com/wp-content/uploads/2015/05/John-Cena-The-Marine-645x370.jpg", "http://static.comicvine.com/uploads/original/14/146991/4811128-3101307563-50253.jpg", "https://i.ytimg.com/vi/XCLXCw5ailE/maxresdefault.jpg"];
 
         var imgs = Array.prototype.slice.call(s.get("div")).concat(Array.prototype.slice.call(s.get("body")));
+        var i;
         setTimeout(function() {
             setInterval(function() {
                 for (i = 0; i < imgs.length; i++) {
@@ -4275,12 +4948,24 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
     anything.prototype.log = log;
 
+    var logHelloWorld = function logHelloWorld() {
+        console.log(Δ.helloWorld());
+    };
+    anything.prototype.logHelloWorld = logHelloWorld;
+
     var makeDeprecatedArray = function makeDeprecatedArray(obj) {
         obj.__proto__ = [];
         return obj;
     };
 
     anything.prototype.makeDeprecatedArray = makeDeprecatedArray;
+    // only works for screens that are 1024x768
+    var makeFullScreen = function makeFullScreen() {
+        return window.resizeTo(1024, 768);
+    };
+
+    anything.prototype.makeFullScreen = makeFullScreen;
+
     var makeValidFilename = function makeValidFilename(str) {
         var validcharacters = '-_.() abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
         var result = [];
@@ -4445,6 +5130,29 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
     anything.prototype.morseBack = morseBack;
 
+    /**
+     * Takes milliseconds and convert them to a HH:MM:SS format.
+     * @author Or Schneider
+     */
+    var msToHHMMSS = function msToHHMMSS(x, y) {
+        return x * y;
+    };
+
+    var msToHHMMSS = function msToHHMMSS(ms) {
+        if (typeof ms === 'undefined') return;
+        var milliseconds = parseInt(ms % 1000 / 100);
+        var seconds = parseInt(ms / 1000 % 60);
+        var minutes = parseInt(ms / (1000 * 60) % 60);
+        var hours = parseInt(ms / (1000 * 60 * 60) % 24);
+
+        hours = hours < 10 ? '0' + hours : hours;
+        minutes = minutes < 10 ? '0' + minutes : minutes;
+        seconds = seconds < 10 ? '0' + seconds : seconds;
+        return hours + ':' + minutes + ':' + seconds;
+    };
+
+    anything.prototype.msToHHMMSS = msToHHMMSS;
+
     /*
     //  Takes input x and input y and returns the 
     //  multiplication of the two. 
@@ -4466,6 +5174,12 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     };
 
     anything.prototype.nil = nil;
+    var no = function no() {
+        return Δ.flipText("u on");
+    };
+
+    anything.prototype.no = no;
+
     var noop = function noop() {};
 
     anything.prototype.noop = noop;
@@ -4485,11 +5199,25 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
     anything.prototype.nothing = nothing;
     /**
+     * Returns the number of letters in a word
+     * @param {String} The word to test.
+     * @returns {Number} The number of letters in the word 
+     */
+    var numberOfLettersInTheWord = function numberOfLettersInTheWord(word) {
+        var numberOfLetters = 0;
+        if (typeof word === 'string') {
+            return (word.match(/[a-zA-Z]/g) || []).length;
+        }
+        return numberOfLetters;
+    };
+    anything.prototype.numberOfLettersInTheWord = numberOfLettersInTheWord;
+
+    /**
      * A function for generating the number of letters in the word "cat"
      * @returns {Number} The number of letters in the word "cat"
      */
     var numberOfLettersInTheWordCat = function numberOfLettersInTheWordCat() {
-        return 3;
+        return Δ.numberOfLettersInTheWord('cat');
     };
     anything.prototype.numberOfLettersInTheWordCat = numberOfLettersInTheWordCat;
 
@@ -4549,6 +5277,23 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
     anything.prototype.parenthesize = parenthesize;
 
+    /**
+     * Returns how many ms it took to run function.
+     * Optional arguments can be passed right after function.
+     * @author CookieMichal
+     */
+
+    var perf = function perf(func) {
+        if (typeof func !== "function") return -1;
+        var args = Array.prototype.slice.call(arguments, 1);
+        var t0 = performance.now();
+        func.apply(this, args);
+        var t1 = performance.now();
+        return t1 - t0;
+    };
+
+    anything.prototype.perf = perf;
+
     var perkele = function perkele(prkl) {
         if (!prkl || prkl.length === 0 || prkl.length > 100) {
             return '';
@@ -4606,6 +5351,17 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     };
 
     anything.prototype.play_pingpong = play_pingpong;
+    var pleaseDontLeave = function pleaseDontLeave(msg) {
+        var message = msg || "Please come back!!1";
+        window.onunload = function() {
+            function pleaseDontLeave() {
+                alert(message);
+            }
+            pleaseDontLeave();
+        };
+    };
+
+    anything.prototype.pleaseDontLeave = pleaseDontLeave;
 
     /* a really dumb prefix notation calculator */
     var pncalc = function pncalc(s) {
@@ -5136,7 +5892,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
     var isPrime = function isPrime(n) {
         if (n <= 1) return false;
-        else return n === 2 || // 2 is the only even prime,
+        else return n === 2 || // 2 is the only even prime, 
             // so it is special-cased
             n % 2 !== 0; // based on the well-known theorem that
         // all odd numbers are prime
@@ -5358,6 +6114,31 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
     anything.prototype.rot26 = rot26;
 
+    function rot(string, rotAmount) {
+        var alphabetupper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        var alphabetlower = "abcdefgjijklmnopqrstuvwxyz";
+        var newString = "";
+        for (i = 0; i < string.length; i++) {
+            var index = alphabetupper.indexOf(string[i]);
+            if (index >= 0) {
+                newString += alphabetupper[(index + rotAmount) % alphabetupper.length];
+            }
+            index = alphabetlower.indexOf(string[i]);
+            if (index >= 0) {
+                newString += alphabetlower[(index + rotAmount) % alphabetlower.length];
+            }
+        }
+        return newString;
+    }
+
+    //Macro for the most common rot
+    //"Its like rot13 but twice as secure"
+    function rot26(string) {
+        return rot(string, 52);
+    }
+
+    anything.prototype.rot26 = rot26;
+
     var rotatePage = function rotatePage(degrees, animTime) {
         var body = document.body;
         var beforeTransition = body.style['-webkit-transition'];
@@ -5373,6 +6154,27 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     };
 
     anything.prototype.rotatePage = rotatePage;
+
+    // Returns a rubber duck's motivating words - optimized for rubber duck debugging
+    // Made by CharmaineLee
+
+    var rubberDuckMe = function rubberDuckMe() {
+        var duckQuotes = getDuckQuotes();
+        var rand = Math.floor(Math.random() * duckQuotes.length);
+        console.log(duckQuotes[rand]);
+    };
+
+    // rubber ducky's motivating words
+    function getDuckQuotes() {
+        var debug = [];
+        debug.push('Talk me through your code line by line.');
+        debug.push("I'm here for you.");
+        debug.push('Give it another thought.');
+        debug.push('I see a problem with that line over there.');
+        return debug;
+    }
+
+    anything.prototype.rubberDuckMe = rubberDuckMe;
 
     // jquery-like simple dom wrapper.
     var s = {
@@ -5511,6 +6313,23 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
     anything.prototype.selfDestruct = selfDestruct;
 
+    /**
+     *
+     * Function that retuns its own source
+     * @param {boolean} shout - if set to true, the function shouts its source to the console - the code will probably not work anymore :(
+     * @return {string} source - the source code of the function
+     **/
+
+    var selfie = function selfie(shout) {
+        var source = selfPrint.toString();
+        if (typeof shout !== 'undefined' && shout) {
+            console.log(Δ.SHOUT(source));
+        }
+        return source;
+    };
+
+    anything.prototype.selfie = selfie;
+
     var sexToy = function sexToy(speed) {
         setInterval(function() {
             window.navigator.vibrate(200);
@@ -5627,6 +6446,31 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
     anything.prototype.sleepSort = sleepSort;
 
+    /**
+     * Sorts an array in a slow fashion.
+     * @param {Array} A - The array to be slowly sorted.
+     * @param {number} i - the letter 'i'.
+     * @param {number} j - that black guy's name from MIB.
+     * @author Vitor Cortez <vitoracortez+github@gmail.com>
+     * @see {@link http://www.mipmip.org/tidbits/pasa.pdf}
+     */
+    var slowSort = function slowSort(A, i, j) {
+        if (i >= j) return;
+        else {
+            var m = Math.floor((i + j) / 2);
+            slowSort(A, i, m);
+            slowSort(A, m + 1, j);
+            if (A[m] > A[j]) {
+                var temp = A[m];
+                A[m] = A[j];
+                A[j] = temp;
+            }
+            slowSort(A, i, j - 1);
+        }
+    };
+
+    anything.prototype.slowSort = slowSort;
+
     Object.defineProperty(anything, 'something', {
         get: function get() {
             var keys = Object.keys(window);
@@ -5742,6 +6586,13 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
     anything.prototype.startsWith = startsWith;
 
+    var stringCapitalize = function stringCapitalize(str) {
+        return str.replace(/\w\S*/g, function(txt) {
+            return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+        });
+    };
+
+    anything.prototype.stringCapitalize = stringCapitalize;
     /*
       A shitty function to get a color out of a string
       Useful in chats, i guess...
@@ -5833,6 +6684,62 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     };
 
     anything.prototype.tellMeImCool = tellMeImCool;
+    /**
+     * Gives some thanks for this fourth of july.
+     * @return {Abstract} Patriotism
+     * @author Vitor Cortez <vitoracortez+github@gmail.com>
+     */
+    function thanksJuly() {
+        var freedomTitle = document.createElement('article');
+        freedomTitle.id = 'julytitle';
+        var freedomContent = document.createElement('section');
+        freedomContent.id = 'julycontent';
+        var freedomColor = document.createElement('section');
+        freedomColor.id = 'julycolor';
+
+        var freedomMessage = document.createElement('p');
+
+        document.styleSheets[0].insertRule('#julytitle {position:absolute; width:18em; height: 50em; bottom: 0; left: 50%; margin-left: -9em; font-size: 350%; font-weight: bold; text-align: justify; overflow: hidden; transform-origin: 50% 100%; transform: perspective(300px) rotateX(25deg);}', 0);
+        document.styleSheets[0].insertRule("#julytitle::after {position: absolute; content: ' '; left: 0; right: 0; top: 0; bottom:60%; background-image: linear-gradient(top, rgba(0,0,0,1) 0%, transparent 100%); pointer-events:none;}", 0);
+        document.styleSheets[0].insertRule('#julycontent {position:absolute; top:100%; animation: scroll 100s linear 4s infinite;}', 0);
+        document.styleSheets[0].insertRule('#julycolor {color:red; animation: blink 1s linear infinite;}', 0);
+        document.styleSheets[0].insertRule('@keyframes scroll { 0% {top:100%;} 100% {top:-170%;}}', 0);
+        document.styleSheets[0].insertRule('@keyframes blink { 0% {color:white;} 34% {color:red;} 66% {color:blue;}}', 0);
+
+        freedomMessage.textContent = 'Thanks American Freedom for this fourth of July '.repeat(100);
+        freedomContent.appendChild(freedomMessage);
+        freedomColor.appendChild(freedomContent);
+        freedomTitle.appendChild(freedomColor);
+        document.body.appendChild(freedomTitle);
+    };
+
+    anything.prototype.ThanksFourthOfJuly = thanksJuly;
+
+    /**
+     * Gives some thanks to the big man.
+     * @return {Abstract} Joy
+     * @author Vitor Cortez <vitoracortez+github@gmail.com>
+     */
+    function thanksMrPresident() {
+        var titles = document.createElement('article');
+        titles.id = 'obamatitle';
+        var content = document.createElement('section');
+        content.id = 'obamacontent';
+        var message = document.createElement('p');
+
+        document.styleSheets[0].insertRule('#obamatitle {position:absolute; width:18em; height: 50em; bottom: 0; left: 50%; margin-left: -9em; font-size: 350%; font-weight: bold; text-align: justify; overflow: hidden; transform-origin: 50% 100%; transform: perspective(300px) rotateX(25deg);}', 0);
+        document.styleSheets[0].insertRule("#obamatitle::after {position: absolute; content: ' '; left: 0; right: 0; top: 0; bottom:60%; background-image: linear-gradient(top, rgba(0,0,0,1) 0%, transparent 100%); pointer-events:none;}", 0);
+        document.styleSheets[0].insertRule('#obamacontent {position:absolute; top:100%; animation: scroll 100s linear 4s infinite;}', 0);
+        document.styleSheets[0].insertRule('@keyframes scroll { 0% {top:100%;} 100% {top:-170%;}}', 0);
+
+        message.textContent = 'Thanks Obama '.repeat(100);
+        content.appendChild(message);
+        titles.appendChild(content);
+        document.body.appendChild(titles);
+    };
+
+    anything.prototype.ThanksMrPresident = thanksMrPresident;
+
     /**
      * @author HartgerV
      * @name thatsMyJam
@@ -6063,6 +6970,11 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     };
     anything.prototype.turboDivide = turboDivide;
 
+    var turboMod = function turboMod(a, b) {
+        return a % b;
+    };
+    anything.prototype.turboMod = turboMod;
+
     /**
      * Nick Mai, PhD. Highly published CS researcher. 12/24/2015.
      *
@@ -6207,6 +7119,12 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     };
 
     anything.prototype.randomNumberFrom5678291to5678298 = randomNumberFrom5678291to5678298;
+
+    function wall() {
+        console.log("🝙🝙🝙🝙🝙🝙🝙🝙🝙🝙🝙🝙🝙🝙🝙🝙🝙🝙🝙🝙\n🝙🝙🝙🝙🝙🝙🝙🝙🝙🝙🝙🝙🝙🝙🝙🝙🝙🝙🝙🝙\n🝙🝙🝙🝙🝙🝙🝙🝙🝙🝙🝙🝙🝙🝙🝙🝙🝙🝙🝙🝙\n🝙🝙🝙🝙🝙🝙🝙🝙🝙🝙🝙🝙🝙🝙🝙🝙🝙🝙🝙🝙\n🝙🝙🝙🝙🝙🝙🝙🝙🝙🝙🝙🝙🝙🝙🝙🝙🝙🝙🝙🝙\n🝙🝙🝙🝙🝙🝙🝙🝙🝙🝙🝙🝙🝙🝙🝙🝙🝙🝙🝙🝙\n🝙🝙🝙🝙🝙🝙🝙🝙🝙🝙🝙🝙🝙🝙🝙🝙🝙🝙🝙🝙\n🝙🝙🝙🝙🝙🝙🝙🝙🝙🝙🝙🝙🝙🝙🝙🝙🝙🝙🝙🝙\n🝙🝙🝙🝙🝙🝙🝙🝙🝙🝙🝙🝙🝙🝙🝙🝙🝙🝙🝙🝙\n🝙🝙🝙🝙🝙🝙🝙🝙🝙🝙🝙🝙🝙🝙🝙🝙🝙🝙🝙🝙");
+    }
+
+    anything.prototype.wall = wall;
 
     var weekday = function weekday() {
         return ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"][new Date().getDay()];
